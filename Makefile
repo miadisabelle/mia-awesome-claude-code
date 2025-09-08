@@ -7,7 +7,7 @@ else
 endif
 SCRIPTS_DIR := ./scripts
 
-.PHONY: help process validate validate-single validate_new_resource update clean test generate download-resources add_resource sort submit submit-resource
+.PHONY: help process validate validate-single validate_new_resource update clean test generate download-resources add_resource sort submit submit-resource coaiapy-init coaiapy-analyze-resource coaiapy-demo
 
 help:
 	@echo "Available commands:"
@@ -24,6 +24,11 @@ help:
 	@echo "  make download-resources - Download active resources from GitHub"
 	@echo "  make sort              - Sort resources by category, sub-category, and name"
 	@echo "  make clean             - Remove generated files"
+	@echo ""
+	@echo "CoaiAPy Integration Commands:"
+	@echo "  make coaiapy-init      - Initialize CoaiAPy configuration"
+	@echo "  make coaiapy-demo      - Run CoaiAPy integration demonstration"
+	@echo "  make coaiapy-analyze-resource URL=<url> - Analyze a resource with CoaiAPy"
 	@echo ""
 	@echo "Options:"
 	@echo "  make validate-github   - Run validation in GitHub Action mode (JSON output)"
@@ -132,3 +137,38 @@ submit:
 
 # Alias for submit
 submit-resource: submit
+
+# CoaiAPy Integration Commands
+
+# Initialize CoaiAPy configuration
+coaiapy-init:
+	@echo "🧠🌸 Initializing CoaiAPy for Awesome Claude Code..."
+	@if command -v coaia >/dev/null 2>&1; then \
+		echo "✅ CoaiAPy is available"; \
+		coaia init; \
+	else \
+		echo "❌ CoaiAPy not found. Install with: pip install coaiapy"; \
+		exit 1; \
+	fi
+
+# Run CoaiAPy integration demonstration
+coaiapy-demo:
+	@echo "🧠🌸 Running CoaiAPy Integration Demonstration..."
+	@$(PYTHON) $(SCRIPTS_DIR)/coaiapy_integration.py
+
+# Analyze a resource using CoaiAPy pipeline
+coaiapy-analyze-resource:
+	@if [ -z "$(URL)" ]; then \
+		echo "Error: Please provide a URL to analyze"; \
+		echo "Usage: make coaiapy-analyze-resource URL=https://github.com/user/repo"; \
+		exit 1; \
+	fi
+	@echo "🧠🌸 Analyzing resource with CoaiAPy: $(URL)"
+	@if command -v coaia >/dev/null 2>&1; then \
+		echo "✨ Using CoaiAPy pipeline for intelligent analysis..."; \
+		coaia pipeline create quick-analysis --var content_url="$(URL)" --var analysis_type="awesome_claude_resource" || echo "📝 Pipeline requires configuration"; \
+	else \
+		echo "❌ CoaiAPy not available. Install with: pip install coaiapy"; \
+		echo "🔄 Falling back to standard validation..."; \
+		$(PYTHON) $(SCRIPTS_DIR)/validate_single_resource.py "$(URL)"; \
+	fi

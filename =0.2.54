@@ -1,0 +1,55 @@
+Defaulting to user installation because normal site-packages is not writeable
+Collecting coaiapy
+  Downloading coaiapy-0.2.69-py3-none-any.whl.metadata
+     - 26.7 kB ? 0:00:00
+Collecting boto3<=1.26.137 (from coaiapy)
+  Downloading boto3-1.26.137-py3-none-any.whl.metadata
+     - 7.0 kB ? 0:00:00
+Collecting mutagen<=1.45.1 (from coaiapy)
+  Downloading mutagen-1.45.1-py3-none-any.whl.metadata
+     - 1.9 kB ? 0:00:00
+Requirement already satisfied: certifi in /usr/lib/python3/dist-packages (from coaiapy) (2023.11.17)
+Collecting charset-normalizer (from coaiapy)
+  Downloading charset_normalizer-3.4.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata
+     - 36.7 kB 105.2 MB/s 0:00:00
+Requirement already satisfied: idna in /usr/lib/python3/dist-packages (from coaiapy) (3.6)
+Collecting redis==5.1.1 (from coaiapy)
+  Downloading redis-5.1.1-py3-none-any.whl.metadata
+     - 9.1 kB ? 0:00:00
+Requirement already satisfied: requests in /usr/lib/python3/dist-packages (from coaiapy) (2.31.0)
+Collecting markdown (from coaiapy)
+  Downloading markdown-3.9-py3-none-any.whl.metadata
+     - 5.1 kB ? 0:00:00
+Requirement already satisfied: PyYAML in /usr/lib/python3/dist-packages (from coaiapy) (6.0.1)
+Collecting botocore<1.30.0,>=1.29.137 (from boto3<=1.26.137->coaiapy)
+  Downloading botocore-1.29.165-py3-none-any.whl.metadata
+     - 5.9 kB ? 0:00:00
+Requirement already satisfied: jmespath<2.0.0,>=0.7.1 in /usr/lib/python3/dist-packages (from boto3<=1.26.137->coaiapy) (1.0.1)
+Collecting s3transfer<0.7.0,>=0.6.0 (from boto3<=1.26.137->coaiapy)
+  Downloading s3transfer-0.6.2-py3-none-any.whl.metadata
+     - 1.8 kB ? 0:00:00
+Requirement already satisfied: python-dateutil<3.0.0,>=2.1 in /usr/lib/python3/dist-packages (from botocore<1.30.0,>=1.29.137->boto3<=1.26.137->coaiapy) (2.8.2)
+Collecting urllib3<1.27,>=1.25.4 (from botocore<1.30.0,>=1.29.137->boto3<=1.26.137->coaiapy)
+  Downloading urllib3-1.26.20-py2.py3-none-any.whl.metadata
+     - 50.1 kB 190.1 MB/s 0:00:00
+Downloading coaiapy-0.2.69-py3-none-any.whl
+   - 70.2 kB 148.7 MB/s 0:00:00
+Downloading redis-5.1.1-py3-none-any.whl
+   - 261.3 kB 207.4 MB/s 0:00:00
+Downloading boto3-1.26.137-py3-none-any.whl
+   - 135.6 kB 180.1 MB/s 0:00:00
+Downloading botocore-1.29.165-py3-none-any.whl
+   - 11.0 MB 185.1 MB/s 0:00:00
+Downloading mutagen-1.45.1-py3-none-any.whl
+   - 218.7 kB 165.5 MB/s 0:00:00
+Downloading s3transfer-0.6.2-py3-none-any.whl
+   - 79.8 kB 167.8 MB/s 0:00:00
+Downloading urllib3-1.26.20-py2.py3-none-any.whl
+   - 144.2 kB 220.6 MB/s 0:00:00
+Downloading charset_normalizer-3.4.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+   - 151.8 kB 203.1 MB/s 0:00:00
+Downloading markdown-3.9-py3-none-any.whl
+   - 107.4 kB 174.0 MB/s 0:00:00
+Installing collected packages: urllib3, redis, mutagen, markdown, charset-normalizer, botocore, s3transfer, boto3, coaiapy
+
+Successfully installed boto3-1.26.137 botocore-1.29.165 charset-normalizer-3.4.3 coaiapy-0.2.69 markdown-3.9 mutagen-1.45.1 redis-5.1.1 s3transfer-0.6.2 urllib3-1.26.20

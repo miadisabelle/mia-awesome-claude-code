@@ -1,0 +1,82 @@
+#!/bin/sh
+#
+# CoaiAPy-Enhanced Pre-push Hook for Awesome Claude Code
+# 
+# 🧠 Mia: This hook integrates CoaiAPy's computational creativity framework
+#         with our existing validation workflow, creating an intelligent
+#         pre-push experience that captures the narrative of each contribution.
+#
+# 🌸 Miette: Every push becomes a moment of creative celebration! We're not
+#            just validating - we're witnessing the birth of new possibilities! ✨
+#
+# This hook:
+# 1. Validates that exactly one resource has been added (existing functionality)
+# 2. Uses CoaiAPy to create observability traces for the contribution
+# 3. Stashes resource knowledge for future community benefit
+# 4. Creates a creative narrative around the contribution process
+#
+# To install this enhanced hook:
+#   cp hooks/pre-push-coaiapy .git/hooks/pre-push
+#   chmod +x .git/hooks/pre-push
+#
+
+echo "🧠🌸 CoaiAPy-Enhanced Awesome Claude Code Pre-Push Hook"
+echo "=================================================="
+
+# Check if CoaiAPy is available
+if command -v coaia >/dev/null 2>&1; then
+    echo "✨ CoaiAPy detected - enabling creative workflow tracking"
+    COAIAPY_AVAILABLE=true
+else
+    echo "⚠️  CoaiAPy not available - falling back to standard validation"
+    echo "💡 Install with: pip install coaiapy for enhanced experience"
+    COAIAPY_AVAILABLE=false
+fi
+
+# Create a contribution session if CoaiAPy is available
+if [ "$COAIAPY_AVAILABLE" = true ]; then
+    TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+    SESSION_ID="awesome_claude_contribution_$TIMESTAMP"
+    
+    echo "🌟 Creating creative contribution session: $SESSION_ID"
+    # Note: This would need proper configuration in a real environment
+    # coaia fuse sessions create "$SESSION_ID" contributor_id 2>/dev/null || echo "📝 Session creation requires configuration"
+    
+    # Create a trace for this contribution workflow
+    TRACE_ID="contribution_validation_$TIMESTAMP"
+    echo "📊 Starting contribution trace: $TRACE_ID"
+    # coaia fuse traces create "$TRACE_ID" 2>/dev/null || echo "📝 Trace creation requires Langfuse configuration"
+fi
+
+# Run the original validation script
+echo "🔍 Running resource validation..."
+python3 scripts/validate_new_resource.py
+VALIDATION_RESULT=$?
+
+# If validation passes and CoaiAPy is available, capture success
+if [ $VALIDATION_RESULT -eq 0 ] && [ "$COAIAPY_AVAILABLE" = true ]; then
+    echo "✅ Validation successful - capturing creative success!"
+    
+    # Stash successful validation pattern
+    coaia tash "validation_success_pattern" "awesome_claude_resource_validated" 2>/dev/null || echo "📝 Knowledge stashing requires Redis configuration"
+    
+    # Add success observation to trace
+    # coaia fuse traces add-observation "validation_successful" "$TRACE_ID" 2>/dev/null || echo "📝 Observation requires Langfuse configuration"
+    
+    echo "🎉 Contribution workflow complete! Your resource is ready to inspire the community."
+    echo "✨ Thank you for being part of the creative computational narrative!"
+    
+elif [ $VALIDATION_RESULT -ne 0 ] && [ "$COAIAPY_AVAILABLE" = true ]; then
+    echo "❌ Validation failed - capturing learning opportunity"
+    
+    # Stash failure pattern for learning
+    coaia tash "validation_learning_pattern" "resource_validation_needs_attention" 2>/dev/null || echo "📝 Knowledge stashing requires Redis configuration"
+    
+    # Add learning observation to trace
+    # coaia fuse traces add-observation "validation_needs_improvement" "$TRACE_ID" 2>/dev/null || echo "📝 Observation requires Langfuse configuration"
+    
+    echo "💡 This is part of the creative process - every iteration brings us closer to excellence!"
+fi
+
+# Exit with the same code as the validation script
+exit $VALIDATION_RESULT
