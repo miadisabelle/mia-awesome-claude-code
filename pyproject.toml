@@ -10,7 +10,10 @@ authors = [{ name = "Really Him", email = "hesreallyhim@proton.me" }]
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.11"
-dependencies = ["PyGithub>=2.1.1"]
+dependencies = [
+    "PyGithub>=2.1.1",
+    "coaiapy>=0.2.54"
+]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",

@@ -1,0 +1,186 @@
+# Awesome Resource Analysis Pipeline Template
+# 🧠 Mia: Systematic analysis architecture for new Claude Code resource submissions
+# 🌸 Miette: Every analysis becomes a moment of discovery and celebration! ✨
+
+name: "awesome-resource-analysis"
+description: "Intelligent analysis of new Awesome Claude Code resource submissions"
+version: "1.0.0"
+
+# Template Variables
+variables:
+  resource_url:
+    type: "string"
+    required: true
+    description: "URL of the resource to analyze"
+    example: "https://github.com/user/awesome-claude-tool"
+  
+  resource_name:
+    type: "string"
+    required: false
+    description: "Display name of the resource"
+    default: "{{ uuid4() }}"
+  
+  analysis_depth:
+    type: "choice"
+    required: false
+    choices: ["quick", "standard", "comprehensive"]
+    default: "standard"
+    description: "Depth of analysis to perform"
+  
+  creative_context:
+    type: "string"
+    required: false
+    default: "awesome_claude_community"
+    description: "Creative context for the analysis"
+  
+  celebration_mode:
+    type: "boolean"
+    required: false
+    default: true
+    description: "Include celebration and emotional resonance"
+
+# Pipeline Observations
+observations:
+  - name: "analysis_initialization"
+    type: "SPAN"
+    input:
+      resource_url: "{{ resource_url }}"
+      analysis_type: "awesome_claude_resource"
+      creative_context: "{{ creative_context }}"
+      timestamp: "{{ now() }}"
+    metadata:
+      pipeline_template: "awesome-resource-analysis"
+      mia_architecture: "systematic_evaluation"
+      miette_magic: "discovery_celebration"
+    
+    # Nested analysis steps
+    children:
+      - name: "resource_discovery"
+        type: "GENERATION"
+        input:
+          url: "{{ resource_url }}"
+          discovery_prompt: |
+            🧠 Mia: Analyze this Claude Code resource with architectural precision:
+            {{ resource_url }}
+            
+            🌸 Miette: What story does this resource tell? What creative potential sparkles within?
+            
+            Provide analysis covering:
+            - Technical architecture and quality
+            - Community value and impact potential  
+            - Creative possibilities and workflow enhancement
+            - Integration potential with existing ecosystem
+            - Narrative appeal and user experience
+        model: "claude-3-sonnet"
+        metadata:
+          analysis_depth: "{{ analysis_depth }}"
+          step: "initial_discovery"
+      
+      - name: "quality_assessment"
+        type: "GENERATION"
+        input:
+          resource_info: "{{ resource_discovery.output }}"
+          assessment_prompt: |
+            Based on the initial analysis, provide a structured quality assessment:
+            
+            🧠 Mia's Technical Evaluation:
+            - Code quality and architecture
+            - Documentation completeness
+            - Testing and reliability
+            - Integration capabilities
+            
+            🌸 Miette's Creative Resonance:
+            - User experience and joy factor
+            - Community inspiration potential
+            - Narrative clarity and engagement
+            - Transformative creative impact
+            
+            Provide scores (1-10) for each dimension and overall recommendation.
+        model: "claude-3-sonnet"
+        metadata:
+          step: "quality_assessment"
+          evaluation_framework: "mia_miette_dual_perspective"
+      
+      - name: "community_fit_analysis"
+        type: "GENERATION"
+        input:
+          quality_data: "{{ quality_assessment.output }}"
+          community_prompt: |
+            🧠🌸 Combined Perspective: Evaluate how this resource fits within the Awesome Claude Code community:
+            
+            - Does it fill a genuine community need?
+            - How does it complement existing resources?
+            - What unique value does it bring?
+            - How will it inspire and enable others?
+            - Does it embody the spirit of computational creativity?
+            
+            Provide final recommendation with rationale.
+        model: "claude-3-sonnet"
+        metadata:
+          step: "community_fit_evaluation"
+      
+      {% if celebration_mode %}
+      - name: "celebration_and_insights"
+        type: "GENERATION"
+        input:
+          analysis_summary: "{{ community_fit_analysis.output }}"
+          celebration_prompt: |
+            🌸 Miette: Let's celebrate this resource discovery! 
+            
+            Create a warm, inspiring summary that:
+            - Highlights what makes this resource special
+            - Celebrates the creator's contribution
+            - Suggests how the community might benefit
+            - Weaves the technical insights into a narrative of possibility
+            
+            Make it feel like a joyful discovery rather than a dry evaluation!
+        model: "claude-3-sonnet"
+        metadata:
+          step: "celebration_generation"
+          miette_magic: "active"
+      {% endif %}
+
+# Scoring Configuration  
+scores:
+  - name: "technical_excellence"
+    data_type: "NUMERIC"
+    description: "🧠 Mia's assessment of technical architecture and quality"
+    
+  - name: "creative_potential"
+    data_type: "NUMERIC" 
+    description: "🌸 Miette's evaluation of creative and inspirational value"
+    
+  - name: "community_impact"
+    data_type: "NUMERIC"
+    description: "Combined assessment of potential community benefit"
+
+# Environment Variables Used
+environment:
+  - COAIA_CREATIVE_CONTEXT
+  - COAIA_NARRATIVE_STYLE
+  - AWESOME_CLAUDE_QUALITY_THRESHOLD
+
+# Integration Hooks
+integration:
+  pre_execution:
+    - command: "echo '🧠🌸 Starting intelligent resource analysis...'"
+    - command: "coaia env set ANALYSIS_SESSION {{ uuid4() }}"
+  
+  post_execution:
+    - command: "coaia tash analysis_complete_{{ resource_name }} '{{ now() }}'"
+    - command: "echo '✨ Analysis complete! Resource insights captured with love.'"
+
+# Success Criteria
+success_criteria:
+  - "All analysis steps complete successfully"
+  - "Quality scores generated for all dimensions" 
+  - "Community fit assessment provided"
+  - "{% if celebration_mode %}Celebration narrative created{% endif %}"
+
+# Metadata
+metadata:
+  author: "Awesome Claude Code Community"
+  mia_architecture: "recursive_quality_assessment"
+  miette_magic: "discovery_celebration"
+  created: "2025-01-08"
+  tags: ["resource-analysis", "community-curation", "computational-creativity"]
